@@ -25,19 +25,19 @@ def colocarBarco(lista2):
     largo=int(input())
     while 0> largo > 4 :
         print("No puedes exceder de 4, prueba otra vez: ")
-        largo=int(input())
+        longitud=int(input())
     
     cuenta1 = cuenta2 = cuenta3 = cuenta4 = 0
-    if largo == 1 and cuenta1 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+    if longitud == 1 and cuenta1 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
         cuenta1+=1
-    if largo == 2 and cuenta2 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 2
+    if longitud == 2 and cuenta2 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 2
         cuenta2+=1
-    if largo == 3 and cuenta3 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 3
+    if longitud == 3 and cuenta3 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 3
         cuenta2+=1
-    if largo == 4 and cuenta2 <= 1: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+    if longitud == 4 and cuenta2 <= 1: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
         cuenta2+=1
     i=0
-    while i < largo:
+    while i < longitud:
         print("introduce la ",i+1," coordenada:")
         coordenada=int(input())
         while lista2[coordenada] == "B":
