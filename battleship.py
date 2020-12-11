@@ -12,48 +12,6 @@ def primerTablero(lista1):
            listabarco = [i,j]
            lista1.append(listabarco)
         print("\n")
-<<<<<<< HEAD
-        for j in range(num):
-            print("|_|",end="")
-            posicion=[i],[j]
-            listaTab.append(posicion)
-    print("\n")        
-
-
-def introducirCoordenada(lista):
-    print("vamos a colocar el barco de 4")
-    print("Introduce coordenada para colocar el barco con los numeros seguidos, por ejemplo, si quieres colocarlos en la posicion fila 1, columna 1, escribe: 11")  
-    contador=0
-    while contador < 4:
-        print("Introduce ",contador+1,"coordenada: ")
-        posiBarco=int(input())
-        lista[posiBarco] = "B"
-        contador+=1
-    print(lista)
-
-def imprimirTableroLista(listaPos):
-    for i in range(len(listaPos)):
-        for j in range(len(listaPos)):
-            if i,j == "B":
-                print("B")
-
-
-numero=int(input("Introduce un numero para filas y columnas: "))
-lista=[]
-posicion =[],[]
-crearTablero(numero,lista)
-introducirCoordenada(lista)
-imprimirTableroLista(lista)
-# colocarBarco(lista,posicion)
-# print(lista)
-=======
-
-
-    # lista1[00]= "B"
-    # if lista1[00]== "B":
-    #     print("avanzas")
-    # print(lista1)
-
 
 def colocarBarco(lista2):
     print("Di de que largo quieres colocar el barco (1,2,3 o 4): ")
@@ -107,11 +65,11 @@ def mostrarMenu(lista):
         if opcion == 3:
             salir = True
     
-        
+    
 
 lista=[]
 numero=10
 primerTablero(lista)
 mostrarMenu(lista)        
 
->>>>>>> a5fbcb7e6848f2a12b492442f7a7d23f18f8e890
+
