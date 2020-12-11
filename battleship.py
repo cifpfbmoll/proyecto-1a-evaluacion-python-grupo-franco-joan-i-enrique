@@ -20,11 +20,18 @@ def introducirCoordenada(lista):
         contador+=1
     print(lista)
 
+def imprimirTableroLista(listaPos):
+    for i in range(len(listaPos)):
+        for j in range(len(listaPos)):
+            if i,j == "B":
+                print("B")
+
+
 numero=int(input("Introduce un numero para filas y columnas: "))
 lista=[]
 posicion =[],[]
 crearTablero(numero,lista)
 introducirCoordenada(lista)
-imprimeConBarco(lista)
+imprimirTableroLista(lista)
 # colocarBarco(lista,posicion)
 # print(lista)
