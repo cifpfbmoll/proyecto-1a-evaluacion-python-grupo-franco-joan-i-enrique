@@ -3,7 +3,7 @@ os.system('cls')
 lista=[]
 listaLetras=["a","b","c","d","e","f","g","h","i","j"]
 numero=10
-
+contadorBarco1 = contadorBarco2 = contadorBarco3 = contadorBarco4 = 0
 def bienvenida():
     print("---------------------------------------------------------------------")
     print("+++++++++++++++++ Bienvenido a Battleship en Python +++++++++++++++++++")
@@ -37,7 +37,8 @@ def mostrarTablero(lista):
             print("|_|",end="  ")
     print("\n")
 
-def colocarBarco(lista,cuenta1):
+def colocarBarco(lista):
+    global cuenta1, cuenta2, cuenta3, cuenta4
     print("Elige la longitud del barco que quieres colocar (1, 2, 3 o 4): ")
     longitud=int(input())
     while 0> longitud > 4 :
@@ -45,11 +46,13 @@ def colocarBarco(lista,cuenta1):
         longitud=int(input())
     #enrique, me da la impresion que tendremo que hacer otra funcion en este punto, ya que si lo dejamos asi, tendremos que copiar la funcion todo el rato dentro de la evaluacion de la longitud y cantidad de barcos.   ********
     
-    if longitud == 1 and cuenta1 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+    if longitud == 1 and cuenta1 < 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
         cuenta1+=1       #******** aqui ira una vez la llamada en caso de poder ser
         llamaBarco(longitud)
-    # if longitud == 2 and cuenta2 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 2
-    #     cuenta2+=1      #******** aqui ira una vez la llamada en caso de poder ser
+    if cuenta1 == 2:
+        print("Ya has colocado todo los barcos de esta medida.")
+    if longitud == 2 and cuenta2 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 2
+        cuenta2+=1      #******** aqui ira una vez la llamada en caso de poder ser
     # if longitud == 3 and cuenta3 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 3
     #     cuenta2+=1      #******** aqui ira una vez la llamada en caso de poder ser
     # if longitud == 4 and cuenta2 <= 1: #aqui se evalua la cantidad de barcos colocados, permitimos 1 barco de 4
@@ -68,7 +71,7 @@ def llamaBarco(longitud):
         i+=1
     return lista    
 
-def mostrarMenu(lista,cuenta1):
+def mostrarMenu(lista):
     menuOn = True
     while menuOn:
         print("¿Qué quieres hacer?")
@@ -77,12 +80,11 @@ def mostrarMenu(lista,cuenta1):
         if opcion == 1:
             mostrarTablero(lista)
         if opcion == 2:
-            colocarBarco(lista,cuenta1)
+            colocarBarco(lista)
             print(cuenta1)
         if opcion == 3:
             menuOn = False
-global cuenta1
-cuenta1=0
+
 bienvenida()
 hacerTablero(lista,listaLetras)
-mostrarMenu(lista,cuenta1)
+mostrarMenu(lista)
