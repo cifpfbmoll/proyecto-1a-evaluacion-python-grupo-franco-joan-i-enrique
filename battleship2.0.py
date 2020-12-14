@@ -47,11 +47,19 @@ def colocarBarco(lista):
     #     cuenta2+=1
     i=0
     while i < longitud:
+        # variable pregunta vertical u horizontal
         print("Introduce la coordenada",i+1,": ")
+        listaCoordenadas=[a2,a3]
         coordenadaBarco=str(input())
         while coordenadaBarco.lower() not in lista:
             print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
             coordenadaBarco=str(input())
+        if i==0:
+            listaCoordenadas.append(lista.index(coordenadaBarco.lower()))
+        while (i>0) and (indice3!=indice1-1 and indice2!=indice1+1): #este while se asegura de que las coordenadas consecutivas son contiguas a la primera(y con suerte y mañana a todas las anteriores en las siguientes vueltas)
+            # error, la nueva coordenada debe ser contigua a la primera.
+            # repetir indice2 hasta que sea correcta.
+        
         lista[lista.index(coordenadaBarco.lower())]="B"
         i+=1
     print(lista)#print extra para ver la lista mientras trabajamos en el código
@@ -67,8 +75,8 @@ def mostrarMenu(lista):
             mostrarTablero(lista)
         if opcion == 2:
             colocarBarco(lista)
-        if opcion == 3:
-            menuOn = False
+        # if opcion == 3:
+        #     menuOn = False
 bienvenida()
 hacerTablero(lista,listaLetras)
 mostrarMenu(lista)
