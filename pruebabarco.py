@@ -1,6 +1,9 @@
 import os
 os.system('cls')
+#commit
 lista=[]
+
+lista2=[]
 listaLetras=["a","b","c","d","e","f","g","h","i","j"]
 numero=10
 contadorBarco1 = contadorBarco2 = contadorBarco3 = contadorBarco4 = 0
@@ -15,7 +18,7 @@ def hacerTablero(lista,listaLetras):
     for i in listaLetras:
         for j in range(1,numero+1):
             print("|_|",end="  ")
-            lista_posiciones = (i+str(j))
+            lista_posiciones = (i+str(j))   # aqui convertimos la cadena de 1-10 a str para poder referirnos a la posicion en el tablero de forma visual
             lista.append(lista_posiciones)
         print("\n")
     print(lista)#print extra para ver la lista mientras trabajamos en el código
@@ -38,7 +41,7 @@ def mostrarTablero(lista):
     print("\n")
 
 def colocarBarco(lista):
-    global cuenta1, cuenta2, cuenta3, cuenta4
+    global contadorBarco1,contadorBarco2,contadorBarco3,contadorBarco4
     print("Elige la longitud del barco que quieres colocar (1, 2, 3 o 4): ")
     longitud=int(input())
     while 0> longitud > 4 :
@@ -46,20 +49,32 @@ def colocarBarco(lista):
         longitud=int(input())
     #enrique, me da la impresion que tendremo que hacer otra funcion en este punto, ya que si lo dejamos asi, tendremos que copiar la funcion todo el rato dentro de la evaluacion de la longitud y cantidad de barcos.   ********
     
-    if longitud == 1 and cuenta1 < 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
-        cuenta1+=1       #******** aqui ira una vez la llamada en caso de poder ser
+    if longitud == 1 and contadorBarco1 < 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+        contadorBarco1+=1       #******** aqui ira una vez la llamada en caso de poder ser
         llamaBarco(longitud)
-    if cuenta1 == 2:
+    if contadorBarco1 == 2:
         print("Ya has colocado todo los barcos de esta medida.")
-    if longitud == 2 and cuenta2 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 2
-        cuenta2+=1      #******** aqui ira una vez la llamada en caso de poder ser
-    # if longitud == 3 and cuenta3 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 3
-    #     cuenta2+=1      #******** aqui ira una vez la llamada en caso de poder ser
-    # if longitud == 4 and cuenta2 <= 1: #aqui se evalua la cantidad de barcos colocados, permitimos 1 barco de 4
-    #     cuenta2+=1
-    return lista,cuenta1            #informarse sobre si la devolucion de cuenta1 incrementa
+    #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    if longitud == 2 and contadorBarco2 < 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+        contadorBarco2+=1       #******** aqui ira una vez la llamada en caso de poder ser
+        llamaBarco(longitud)
+    if contadorBarco2 == 2:
+        print("Ya has colocado todo los barcos de esta medida.")
+    #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    if longitud == 3 and contadorBarco3 < 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+        contadorBarco3+=1       #******** aqui ira una vez la llamada en caso de poder ser
+        llamaBarco(longitud)
+    if contadorBarco3 == 2:
+        print("Ya has colocado todo los barcos de esta medida.")
+    #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    if longitud == 4 and contadorBarco4 < 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+        contadorBarco4+=1       #******** aqui ira una vez la llamada en caso de poder ser
+        llamaBarco(longitud)
+    if contadorBarco4 == 2:
+        print("Ya has colocado todo los barcos de esta medida.")
+    return lista            #informarse sobre si la devolucion de cuenta1 incrementa
 
-def llamaBarco(longitud):
+def llamaBarco(longitud):       #comentalo enrique!
     i=0
     while i < longitud:
         print("Introduce la coordenada",i+1,": ")
@@ -81,7 +96,7 @@ def mostrarMenu(lista):
             mostrarTablero(lista)
         if opcion == 2:
             colocarBarco(lista)
-            print(cuenta1)
+
         if opcion == 3:
             menuOn = False
 
