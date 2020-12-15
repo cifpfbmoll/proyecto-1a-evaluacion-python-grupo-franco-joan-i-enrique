@@ -129,77 +129,105 @@ def colocarBarco(lista,opcion):
     return lista            #informarse sobre si la devolucion de cuenta1 incrementa
 
 def llamaBarco(lista,longitud):       #comentalo enrique!
-    i=0
-    listaCoordenadas=[]
-    while i < longitud:
-        if longitud==1:
-            disposicionBarco=None
-        elif longitud>1 and i==0:
-            disposicionBarco=input("¿Colocar barco en horizontal o vertical? (ej: H o V)") #Pendiente de terminar. Se puede meter while para que respuesta sea h o v.
+    if longitud==1:
+        disposicionBarco=None #no hace falta usar vert/horiz para los de 1
+    elif longitud>1:
+        disposicionBarco=input("¿Colocar barco en horizontal o vertical? (ej: H o V)") #Pendiente de terminar. Se puede meter while para que respuesta sea h o v obligatoriamente.
+
+    inicioBarco=True
+    #meto coord.inic y final en el while, solo sales del bucle si has puesto de 1 ficha correctamente o si has puesto correctamente la inic y final de long 2-4. >>>>
+
+    while inicioBarco:
         print("Introduce la coordenada inicial del barco")
         coordenadaInicial=str(input())
-        while coordenadaBarco.lower() not in lista:         #mirar franco convertir en funcion
+        while coordenadaInicial.lower() not in lista:         #mirar franco convertir en funcion
             print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-            coordenadaBarco=str(input())
-        if longitud>1:
+            coordenadaInicial=str(input())
+        if longitud==1:
+            lista[lista.index(coordenadaInicial.lower())]="B"  #si es un barco de 1, al pasar el while que comprueba la casilla dentro del tablero y disponible pues la asigna como "B" y sale de la función.
+            inicioBarco=False
+
+
+# OK, Agárrate Franco, hago lo mismo que en el viejo método:
+# Almaceno los indices de coordenada inic y fin en >listaInicioFinal<, las ordeno con sorted(). (posición 0 es el indice mas pequeño y posicion 1 es el grande). Y lo uso para hacer comprobaciones de la distancia que hay entre ambas puntas del barco.
+        elif longitud>1:
+            listaInicioFinal=[] #solo para comprobar cosas, 159 y 160 hacen esto
+            listaInicioFinal.append(lista.index(coordenadaInicial.lower()))
             print("Introduce la coordenada final del barco")
             coordenadaFinal=str(input())
-            while coordenadaBarco.lower() not in lista:
+            while coordenadaFinal.lower() not in lista:
                 print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-                coordenadaBarco=str(input())
+                coordenadaFinal=str(input())
             # a partir de aqui vamos a comprobar que las posiciones esten a distancia de longitud
-            distancia--> (indice de coordenada final == longitud-1  + indice de la coordenada inicial)
+            # listaInicioFinal=[]   //descomentar y quitar lineas 151 y 152
+            # listaInicioFinal.append(lista.index(coordenadaInicial.lower()))
+            
+            listaInicioFinal.append(lista.index(coordenadaFinal.lower()))
+            print(listaInicioFinal)  #para ver qué hace el codigo, no es necesaria.
+
+            # distancia--> (indice de coordenada final == longitud-1  + indice de la coordenada inicial)
+            #aqui tenemos un if para barcos en v y otro para horiz.
+            # pero ambos comprueban que el barco sea correcto(la primera y la ultima estén a la distancia adecuada, si es un barco imposible te lleva al else que reinicia TODO el bucle y metes coord.inicio y final de nuevo)
+            if disposicionBarco.lower()=="h" and (sorted(listaInicioFinal)[0])+(longitud-1)==sorted(listaInicioFinal)[-1]:
+                for i in range(longitud):
+                    lista[sorted(listaInicioFinal)[0]+i]="B"
+                inicioBarco=False
+
+            elif disposicionBarco.lower()=="v" and (sorted(listaInicioFinal)[-1])-sorted(listaInicioFinal)[0]==(longitud-1)*10:
+                for i in range(longitud):
+                    lista[sorted(listaInicioFinal)[0]+i*10]="B"
+                inicioBarco=False
+
+            else:
+                print("FAIL! Vuelve a colocar el barco.")
 
 
+# //////////////////////////////////////////////////////////////
+    # CODIGO DEL MÉTODO ANTERIOR, MANTENER PORQUE REUTILIZO COSAS!!!
+    #     while longitud==2 and i==0 and (lista[lista.index(coordenadaBarco.lower())+1]=="B" and lista[lista.index(coordenadaBarco.lower())-1]=="B"):
+    #         coordenadaBarco=str(input("Noob, el barco no cabe, prueba en otro sitio: "))
+    #         #METER FUNCION COMPARAR SI CASILLA VALIDA OTRA VEZ.
+    #         while coordenadaBarco.lower() not in lista:
+    #             print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
+    #             coordenadaBarco=str(input())
+    #     while longitud==3 and i==0 and (lista[lista.index(coordenadaBarco.lower())+1]=="B" and lista[lista.index(coordenadaBarco.lower())-1]=="B") or (lista[lista.index(coordenadaBarco.lower())+2]=="B" and (lista[lista.index(coordenadaBarco.lower())-1]=="B") and (lista[lista.index(coordenadaBarco.lower())-2]=="B" and lista[lista.index(coordenadaBarco.lower())+1]=="B")):
+    #         coordenadaBarco=str(input("Noob, el barco no cabe, prueba en otro sitio: "))
+    #         #acho mi puta vida en bicicleta sería mas facil, 
+    #         #METER FUNCION COMPARAR SI CASILLA VALIDA OTRA VEZ.
+    #         while coordenadaBarco.lower() not in lista:
+    #             print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
+    #             coordenadaBarco=str(input())
 
-
-
-
-        #franco=True  inicio para el bucle de comprobar si cabe y cambiar a false cuando termine
-        while longitud==2 and i==0 and (lista[lista.index(coordenadaBarco.lower())+1]=="B" and lista[lista.index(coordenadaBarco.lower())-1]=="B"):
-            coordenadaBarco=str(input("Noob, el barco no cabe, prueba en otro sitio: "))
-            #acho mi puta vida en bicicleta sería mas facil, 
-            #METER FUNCION COMPARAR SI CASILLA VALIDA OTRA VEZ.
-            while coordenadaBarco.lower() not in lista:
-                print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-                coordenadaBarco=str(input())
-        while longitud==3 and i==0 and (lista[lista.index(coordenadaBarco.lower())+1]=="B" and lista[lista.index(coordenadaBarco.lower())-1]=="B") or (lista[lista.index(coordenadaBarco.lower())+2]=="B" and (lista[lista.index(coordenadaBarco.lower())-1]=="B") and (lista[lista.index(coordenadaBarco.lower())-2]=="B" and lista[lista.index(coordenadaBarco.lower())+1]=="B")):
-            coordenadaBarco=str(input("Noob, el barco no cabe, prueba en otro sitio: "))
-            #acho mi puta vida en bicicleta sería mas facil, 
-            #METER FUNCION COMPARAR SI CASILLA VALIDA OTRA VEZ.
-            while coordenadaBarco.lower() not in lista:
-                print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-                coordenadaBarco=str(input())
-
-        if i==0:
-            listaCoordenadas.append(lista.index(coordenadaBarco.lower()))
-        if longitud>1 and disposicionBarco=="H" or disposicionBarco=="h": 
-        # ////////////////////////////
-        #He tenido que usar una funcion de listas llamada sorted() para que la lista que contiene las coordenadas de los barcos de longitud 2-4 esté ordenada de menor a mayor numero y tomen como referencia las contiguas a las esquinas, sumando +1/+10(es decir comprobar la casilla a la derecha) a la posicion [-1] que tras hacer un sorted siempre será el indice mas a la derecha o mas abajo y sumando -1/-10 a la posicion [0] que siempre será el indice mas pequeño
-        # ///////////////////////////
-        #HACER FUNCION DEL WHILE? pero seguro que las variables dejan de mantener los datos...........
-            while (i>0) and (lista.index(coordenadaBarco.lower())!=(sorted(listaCoordenadas)[0])-1 and lista.index(coordenadaBarco.lower())!=(sorted(listaCoordenadas)[-1])+1):
-                coordenadaBarco=str(input("¡Las casillas deben ser contiguas! Prueba otra vez: "))
-                print(lista, listaCoordenadas)
-                print(coordenadaBarco)
-                while coordenadaBarco.lower() not in lista:
-                    print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-                    coordenadaBarco=str(input())
-                print(coordenadaBarco)
-        elif longitud>1 and disposicionBarco=="V" or disposicionBarco=="v":
-            while (i>0) and (lista.index(coordenadaBarco.lower())!=(sorted(listaCoordenadas)[0])-10 and lista.index(coordenadaBarco.lower())!=(sorted(listaCoordenadas)[-1])+10):
-                coordenadaBarco=str(input("¡Las casillas deben ser contiguas! Prueba otra vez: "))
-                print(lista, listaCoordenadas)
-                print(coordenadaBarco)
-                while coordenadaBarco.lower() not in lista: #pasar esto a funcion
-                    print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-                    coordenadaBarco=str(input())
-                print(coordenadaBarco)
-        if i>0 and longitud>1:
-            listaCoordenadas.append(lista.index(coordenadaBarco.lower()))
-        lista[lista.index(coordenadaBarco.lower())]="B"
-        i+=1
-    print(lista)#print extra para ver la lista mientras trabajamos en el código    
+    #     if i==0:
+    #         listaCoordenadas.append(lista.index(coordenadaBarco.lower()))
+    #     if longitud>1 and disposicionBarco=="H" or disposicionBarco=="h": 
+    #     # ////////////////////////////
+    #     #He tenido que usar una funcion de listas llamada sorted() para que la lista que contiene las coordenadas de los barcos de longitud 2-4 esté ordenada de menor a mayor numero y tomen como referencia las contiguas a las esquinas, sumando +1/+10(es decir comprobar la casilla a la derecha) a la posicion [-1] que tras hacer un sorted siempre será el indice mas a la derecha o mas abajo y sumando -1/-10 a la posicion [0] que siempre será el indice mas pequeño
+    #     # ///////////////////////////
+    #     #HACER FUNCION DEL WHILE? pero seguro que las variables dejan de mantener los datos...........
+    #         while (i>0) and (lista.index(coordenadaBarco.lower())!=(sorted(listaCoordenadas)[0])-1 and lista.index(coordenadaBarco.lower())!=(sorted(listaCoordenadas)[-1])+1):
+    #             coordenadaBarco=str(input("¡Las casillas deben ser contiguas! Prueba otra vez: "))
+    #             print(lista, listaCoordenadas)
+    #             print(coordenadaBarco)
+    #             while coordenadaBarco.lower() not in lista:
+    #                 print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
+    #                 coordenadaBarco=str(input())
+    #             print(coordenadaBarco)
+    #     elif longitud>1 and disposicionBarco=="V" or disposicionBarco=="v":
+    #         while (i>0) and (lista.index(coordenadaBarco.lower())!=(sorted(listaCoordenadas)[0])-10 and lista.index(coordenadaBarco.lower())!=(sorted(listaCoordenadas)[-1])+10):
+    #             coordenadaBarco=str(input("¡Las casillas deben ser contiguas! Prueba otra vez: "))
+    #             print(lista, listaCoordenadas)
+    #             print(coordenadaBarco)
+    #             while coordenadaBarco.lower() not in lista: #pasar esto a funcion
+    #                 print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
+    #                 coordenadaBarco=str(input())
+    #             print(coordenadaBarco)
+    #     if i>0 and longitud>1:
+    #         listaCoordenadas.append(lista.index(coordenadaBarco.lower()))
+    #     lista[lista.index(coordenadaBarco.lower())]="B"
+    #     i+=1
+    # print(lista)#print extra para ver la lista mientras trabajamos en el código    
+# //////////////////////////////////////////////////////
 
 def mostrarMenu(lista,lista2):
     global contadorJugador1
