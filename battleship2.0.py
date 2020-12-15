@@ -52,11 +52,18 @@ def colocarBarco(lista):
         while coordenadaBarco.lower() not in lista:
             print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
             coordenadaBarco=str(input())
-        franco=True
-        while longitud==2 and (lista[lista.index(coordenadaBarco.lower())+1]=="B" and lista[lista.index(coordenadaBarco.lower())-1]=="B"):
+        #franco=True  inicio para el bucle de comprobar si cabe y cambiar a false cuando termine
+        while longitud==2 and i==0 and (lista[lista.index(coordenadaBarco.lower())+1]=="B" and lista[lista.index(coordenadaBarco.lower())-1]=="B"):
             coordenadaBarco=str(input("Noob, el barco no cabe, prueba en otro sitio: "))
             #acho mi puta vida en bicicleta sería mas facil, 
-            #METER FUNCION COMPRAR SI CASILLA VALIDA OTRA VEZ.
+            #METER FUNCION COMPARAR SI CASILLA VALIDA OTRA VEZ.
+            while coordenadaBarco.lower() not in lista:
+                print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
+                coordenadaBarco=str(input())
+        while longitud==3 and i==0 and (lista[lista.index(coordenadaBarco.lower())+1]=="B" and lista[lista.index(coordenadaBarco.lower())-1]=="B") or (lista[lista.index(coordenadaBarco.lower())+2]=="B" and (lista[lista.index(coordenadaBarco.lower())-1]=="B") and (lista[lista.index(coordenadaBarco.lower())-2]=="B" and lista[lista.index(coordenadaBarco.lower())+1]=="B")):
+            coordenadaBarco=str(input("Noob, el barco no cabe, prueba en otro sitio: "))
+            #acho mi puta vida en bicicleta sería mas facil, 
+            #METER FUNCION COMPARAR SI CASILLA VALIDA OTRA VEZ.
             while coordenadaBarco.lower() not in lista:
                 print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
                 coordenadaBarco=str(input())
