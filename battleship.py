@@ -13,13 +13,6 @@ def primerTablero(lista1):
            lista1.append(listabarco)
         print("\n")
 
-
-    # lista1[00]= "B"
-    # if lista1[00]== "B":
-    #     print("avanzas")
-    # print(lista1)
-
-
 def colocarBarco(lista2):
     print("Di de que largo quieres colocar el barco (1,2,3 o 4): ")
     largo=int(input())
@@ -72,10 +65,11 @@ def mostrarMenu(lista):
         if opcion == 3:
             salir = True
     
-        
+    
 
 lista=[]
 numero=10
 primerTablero(lista)
 mostrarMenu(lista)        
+
 
