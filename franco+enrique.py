@@ -22,11 +22,9 @@ def bienvenida():
 def hacerTablero(lista,listaLetras):
     for i in listaLetras:
         for j in range(1,numero+1):
-            print("|_|",end="  ")
             lista_posiciones = (i+str(j))   # aqui convertimos la cadena de 1-10 a str para poder referirnos a la posicion en el tablero de forma visual
             lista.append(lista_posiciones)
-        print("\n")
-    print(lista)#print extra para ver la lista mientras trabajamos en el código
+    # print(lista)#print extra para ver la lista mientras trabajamos en el código
 
 def mostrarTablero(lista):
     listaFila = ["A","B","C","D","E","F","G","H","I","J"]   #esta lista se utilizara para imprimir a principio de linea las letras para el tablero
@@ -134,7 +132,7 @@ def llamaBarco(lista,longitud,listaDianas):       #comentalo enrique!
     if longitud==1:
         disposicionBarco=None #no hace falta usar vert/horiz para los de 1
     elif longitud>1:
-        disposicionBarco=input("¿Colocar barco en horizontal o vertical? (ej: H o V)") #Pendiente de terminar. Se puede meter while para que respuesta sea h o v obligatoriamente.
+        disposicionBarco=input("¿Colocar barco en horizontal o vertical? (ej: H o V): ") #Pendiente de terminar. Se puede meter while para que respuesta sea h o v obligatoriamente.
 
     inicioBarco=True
     #meto coord.inic y final en el while, solo sales del bucle si has puesto de 1 ficha correctamente o si has puesto correctamente la inic y final de long 2-4. >>>>
@@ -246,13 +244,59 @@ def llamaBarco(lista,longitud,listaDianas):       #comentalo enrique!
     # print(lista)#print extra para ver la lista mientras trabajamos en el código    
 # //////////////////////////////////////////////////////
 
+def jugar(lista,lista2,dianas1,dianas2):
+    
+    jugar = True
+    while jugar:
+        turno1=True
+        print("jugador 1: introduce coordenada donde disparar: ")
+        while turno1:
+            jugada1=str(input())
+            while (jugada1.lower() not in lista2) and (jugada1.lower() not in dianas2) :         #mirar franco convertir en funcion
+                print("Apunta mejor, te has salido del tablero. Prueba otra vez: ")
+                jugada1=str(input())
+            if jugada1.lower() in dianas2:
+                dianas2.remove(jugada1.lower())
+                print("Diana! ",end="")
+                if len(dianas2) == 0:
+                    print("Victoria")
+                    jugar=False
+                    turno2=False
+                else:
+                    print("Dispara otra vez")
+                
+            else:
+                print("Agua, no has hecho diana. ")
+                turno1=False
+        turno2=True
+        print("jugador 2: introduce coordenada donde disparar: ")
+        while turno2:
+            jugada2=str(input())
+            while (jugada2.lower() not in lista1) and (jugada2.lower() not in dianas1) :         #mirar franco convertir en funcion
+                print("Apunta mejor, te has salido del tablero. Prueba otra vez: ")
+                jugada2=str(input())
+            if jugada2.lower() in dianas1:
+                dianas1.remove(jugada2.lower())
+                print("Diana! ",end="")
+                if len(dianas1) == 0:
+                    print("Victoria")
+                    jugar=False
+                else:
+                    print("Dispara otra vez")
+            else:
+                print("Agua, no has hecho diana. ")
+                turno2=False
+
+
+
+
 def mostrarMenu(lista,lista2):
     global contadorJugador1
     global contadorJugador2
     menuOn = True
     while menuOn:
         print("¿Qué quieres hacer?")
-        print("1: Ver tablero primer jugador \n2: Colocar barco primer jugador \n3: ver tablero segundo jugador \n4: colocar barco segundo jugador \n5: salir" )
+        print("1: Ver tablero primer jugador \n2: Colocar barco primer jugador \n3: ver tablero segundo jugador \n4: colocar barco segundo jugador \n5: jugar  \n6: salir" )
         opcion=int(input())
         if opcion == 1:
             mostrarTablero(lista)
@@ -266,12 +310,19 @@ def mostrarMenu(lista,lista2):
 
             mostrarTablero(lista2)
         if opcion == 4:
-            if contadorJugador2 ==8:
+            if contadorJugador2 == 8:
                 print("ya has colocado todos los barcos")
             else:
                 colocarBarco(lista2,opcion,listaDianas2)#15/12/2020 colocar barco en lista2 va a haber que mirarlo con cuidado, ya que utiliza los mismo contadores que jugador uno, por ahora... hay dos opciones: mirar como pasarle y reiniciar los contadores y que los tenga en cuenta por dentro cada vez(parece mas complicado, pero mas elegante), o repetir el codigo completo con otro nombre para colocar barcos(parece lo mas facil,pero menos elegante) ---- por ahora he hecho la segunda opción, asi mientras lo vamos terminando. nos acabamos refiriendo a los segundos contadores gracias tanto a la lista que se le pasa como a la opcion escogida en el menu( que tambien se le pasa).
                 contadorJugador2+=1
-        if opcion == 5:
+        if opcion==5 :
+            jugar(lista,lista2,listaDianas1,listaDianas2)
+            # if contadorJugador1==8 and contadorJugador2==8:
+                # jugar(listaDianas1,listaDianas2)
+            # else:
+            #     print("Todavia no habeis(puto enrique y el idioma) colocado todos los barcos")
+            menuOn = False
+        if opcion == 6:
             menuOn = False
 
 bienvenida()
