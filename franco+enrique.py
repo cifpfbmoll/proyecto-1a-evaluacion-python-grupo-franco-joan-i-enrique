@@ -2,6 +2,8 @@ import os
 os.system('cls')
 #commit
 lista=[]
+listaDianas1=[]
+listaDianas2=[] #o contador al num de dianas para ganar o listaDianas.pop/remove>len.lista==0
 
 lista2=[]     # lista instanciada para pasarsela al jugador 2.
 listaLetras=["a","b","c","d","e","f","g","h","i","j"]
@@ -43,7 +45,7 @@ def mostrarTablero(lista):
             print("|_|",end="  ")
     print("\n")
 
-def colocarBarco(lista,opcion):
+def colocarBarco(lista,opcion,listaDianas):
     print(opcion)
     global contadorBarco1,contadorBarco2,contadorBarco3,contadorBarco4
     global contadorBarco5,contadorBarco6,contadorBarco7,contadorBarco8 
@@ -61,7 +63,7 @@ def colocarBarco(lista,opcion):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:   #15/12/2020 ----- finalmente he decidido ponerlo dentro, es mas facil y ahorramos vueltas al programa de evaluar condiciones
                 contadorBarco1+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud)
+                llamaBarco(lista,longitud,listaDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 2 and contadorBarco2 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
@@ -69,7 +71,7 @@ def colocarBarco(lista,opcion):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco2+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud)
+                llamaBarco(lista,longitud,listaDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 3 and contadorBarco3 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
@@ -77,7 +79,7 @@ def colocarBarco(lista,opcion):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco3+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud)
+                llamaBarco(lista,longitud,listaDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 4 and contadorBarco4 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
@@ -85,7 +87,7 @@ def colocarBarco(lista,opcion):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco4+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud)
+                llamaBarco(lista,longitud,listaDianas)
     
     
     if opcion ==4:  #<------  15/12/2020  aqui traigo el numero de la opcion desde el menu, para saber que camino cogemos, digamos si es el colocar barco del jugador 1 o del jugador 2
@@ -100,7 +102,7 @@ def colocarBarco(lista,opcion):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:   #15/12/2020 ----- finalmente he decidido ponerlo dentro, es mas facil y ahorramos vueltas al programa de evaluar condiciones
                 contadorBarco5+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud)
+                llamaBarco(lista,longitud,listaDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 2 and contadorBarco6 <= 2: 
@@ -108,7 +110,7 @@ def colocarBarco(lista,opcion):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco6+=1       
-                llamaBarco(lista,longitud)
+                llamaBarco(lista,longitud,listaDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 3 and contadorBarco7 <= 2: 
@@ -116,7 +118,7 @@ def colocarBarco(lista,opcion):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco7+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud)
+                llamaBarco(lista,longitud,listaDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 4 and contadorBarco8 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
@@ -124,11 +126,11 @@ def colocarBarco(lista,opcion):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco8+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud)
+                llamaBarco(lista,longitud,listaDianas)
     
     return lista            #informarse sobre si la devolucion de cuenta1 incrementa
 
-def llamaBarco(lista,longitud):       #comentalo enrique!
+def llamaBarco(lista,longitud,listaDianas):       #comentalo enrique!
     if longitud==1:
         disposicionBarco=None #no hace falta usar vert/horiz para los de 1
     elif longitud>1:
@@ -144,7 +146,10 @@ def llamaBarco(lista,longitud):       #comentalo enrique!
             print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
             coordenadaInicial=str(input())
         if longitud==1:
-            lista[lista.index(coordenadaInicial.lower())]="B"  #si es un barco de 1, al pasar el while que comprueba la casilla dentro del tablero y disponible pues la asigna como "B" y sale de la función.
+            listaDianas.append(lista[lista.index(coordenadaInicial.lower())])
+            lista[lista.index(coordenadaInicial.lower())]="B"
+            print(listaDianas1)
+              #si es un barco de 1, al pasar el while que comprueba la casilla dentro del tablero y disponible pues la asigna como "B" y sale de la función.
             inicioBarco=False
 
 
@@ -163,23 +168,35 @@ def llamaBarco(lista,longitud):       #comentalo enrique!
             # listaInicioFinal.append(lista.index(coordenadaInicial.lower()))
             
             listaInicioFinal.append(lista.index(coordenadaFinal.lower()))
-            print(listaInicioFinal)  #para ver qué hace el codigo, no es necesaria.
+            print(listaInicioFinal)  #para ver qué hace el codigo, no es necesario el print.
 
             # distancia--> (indice de coordenada final == longitud-1  + indice de la coordenada inicial)
             #aqui tenemos un if para barcos en v y otro para horiz.
             # pero ambos comprueban que el barco sea correcto(la primera y la ultima estén a la distancia adecuada, si es un barco imposible te lleva al else que reinicia TODO el bucle y metes coord.inicio y final de nuevo)
-            if disposicionBarco.lower()=="h" and (sorted(listaInicioFinal)[0])+(longitud-1)==sorted(listaInicioFinal)[-1]:
-                for i in range(longitud):
-                    lista[sorted(listaInicioFinal)[0]+i]="B"
-                inicioBarco=False
+            if disposicionBarco.lower()=="h" and (sorted(listaInicioFinal)[0])+(longitud-1)==sorted(listaInicioFinal)[-1]: 
+                #este if podria ser una funcion porque se repite 2 veces (casi)
+                if lista[sorted(listaInicioFinal)[0]+1]!="B" and lista[sorted(listaInicioFinal)[-1]-1]!="B":
+                    for i in range(longitud):
+                        listaDianas.append(lista[sorted(listaInicioFinal)[0]+i])
+                        lista[sorted(listaInicioFinal)[0]+i]="B"
+                    print(listaDianas1)
+                    inicioBarco=False
+                else:
+                    print("Son barcos, no transformers, no los pongas encima de otros barcos. Vuelve a intentarlo")
 
             elif disposicionBarco.lower()=="v" and (sorted(listaInicioFinal)[-1])-sorted(listaInicioFinal)[0]==(longitud-1)*10:
-                for i in range(longitud):
-                    lista[sorted(listaInicioFinal)[0]+i*10]="B"
-                inicioBarco=False
+                if lista[sorted(listaInicioFinal)[0]+10]!="B" and lista[sorted(listaInicioFinal)[-1]-10]!="B":
+                    for i in range(longitud):
+                        listaDianas.append(lista[sorted(listaInicioFinal)[0]+i*10])
+                        lista[sorted(listaInicioFinal)[0]+i*10]="B"
+                    print(listaDianas1)
+                    inicioBarco=False
+                else:
+                    print("Son barcos, no transformers, no los pongas encima de otros barcos. Vuelve a intentarlo")
+
 
             else:
-                print("FAIL! Vuelve a colocar el barco.")
+                print("FAIL! Vuelve a colocar el barco/El barco no cabe ahí, try again.")
 
 
 # //////////////////////////////////////////////////////////////
@@ -243,7 +260,7 @@ def mostrarMenu(lista,lista2):
             if contadorJugador1 == 8:#15/12/2020  limita la cantidad de barcos a colocar, si pasa de 8 no te deja entrar.
                 print("ya has colocado todos los barcos.")
             else:
-                colocarBarco(lista,opcion)
+                colocarBarco(lista,opcion,listaDianas1)
                 contadorJugador1+=1
         if opcion == 3:         #15/12/2020   he creado dos opciones mas para crear segundo tablero. gracias a pasarle tablero a lista2 sabe a cual me estoy refiriendo.
 
@@ -252,7 +269,7 @@ def mostrarMenu(lista,lista2):
             if contadorJugador2 ==8:
                 print("ya has colocado todos los barcos")
             else:
-                colocarBarco(lista2,opcion)#15/12/2020 colocar barco en lista2 va a haber que mirarlo con cuidado, ya que utiliza los mismo contadores que jugador uno, por ahora... hay dos opciones: mirar como pasarle y reiniciar los contadores y que los tenga en cuenta por dentro cada vez(parece mas complicado, pero mas elegante), o repetir el codigo completo con otro nombre para colocar barcos(parece lo mas facil,pero menos elegante) ---- por ahora he hecho la segunda opción, asi mientras lo vamos terminando. nos acabamos refiriendo a los segundos contadores gracias tanto a la lista que se le pasa como a la opcion escogida en el menu( que tambien se le pasa).
+                colocarBarco(lista2,opcion,listaDianas2)#15/12/2020 colocar barco en lista2 va a haber que mirarlo con cuidado, ya que utiliza los mismo contadores que jugador uno, por ahora... hay dos opciones: mirar como pasarle y reiniciar los contadores y que los tenga en cuenta por dentro cada vez(parece mas complicado, pero mas elegante), o repetir el codigo completo con otro nombre para colocar barcos(parece lo mas facil,pero menos elegante) ---- por ahora he hecho la segunda opción, asi mientras lo vamos terminando. nos acabamos refiriendo a los segundos contadores gracias tanto a la lista que se le pasa como a la opcion escogida en el menu( que tambien se le pasa).
                 contadorJugador2+=1
         if opcion == 5:
             menuOn = False
