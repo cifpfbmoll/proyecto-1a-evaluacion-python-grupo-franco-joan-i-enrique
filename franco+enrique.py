@@ -312,9 +312,13 @@ def mostrarJuntos(listaA,listaB): #no se puede usar la funcion mostrar tablero a
     auxiliar=0
     listaFila = ["A","B","C","D","E","F","G","H","I","J"]   #esta lista se utilizara para imprimir a principio de linea las letras para el tablero
     x=0     #este auxiliar lo coloco aqui para poder referirme a la posicion de la lista que quiero que se imprima, asi puedo ir imprimiendo las filas
+    print("                           TABLERO MIO                                                      TABLERO ENEMIGO       ")
+    print("\n")
+    print("           ",end="")
     for i in range(10):
+        
         print("  ",i+1,end=" ")
-    print(" ",end="")
+    print("            ",end="")
     for i in range(10):
         print("  ",i+1,end=" ")
     print("\n")
@@ -323,13 +327,11 @@ def mostrarJuntos(listaA,listaB): #no se puede usar la funcion mostrar tablero a
         # if i%numero == 0:
         #     print("\n")
         if i == 0 or i%10 == 0:
-            print (listaFila[x],end=" ")    
+            print ("          ",listaFila[x],end=" ")    
             if i>0 and i%10 == 0: 
                 for j in range(10):
                     if listaB[j+auxiliar] == "B":
                         print("|B|",end="  ")
-                    elif listaB[j+auxiliar] == "X":
-                        print("|X|",end="  ")
                     elif listaB[j+auxiliar] == "O":
                         print("|O|",end="  ")
                     else:
@@ -338,7 +340,7 @@ def mostrarJuntos(listaA,listaB): #no se puede usar la funcion mostrar tablero a
                 x+=1            #aqui incrementando la variable de fila para ir a la siguiente letra
                 auxiliar+=10
                 if x<10:
-                    print(listaFila[x],end=" ")
+                    print("          ",listaFila[x],end=" ")
         if i < 100:
             if listaA[i] == "B":
                 print("|B|",end="  ")
