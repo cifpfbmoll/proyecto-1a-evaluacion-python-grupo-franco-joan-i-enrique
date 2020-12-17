@@ -2,16 +2,19 @@ import os
 os.system('cls')
 #commit
 lista=[]
-listaDianas1=[]
-listaDianas2=[] #o contador al num de dianas para ganar o listaDianas.pop/remove>len.lista==0
+listaDisparosJ1=[]
+dictDianas1={}
+dictDianas2={} #o contador al num de dianas para ganar o listaDianas.pop/remove>len.lista==0
+#si convierto listasDianas en diccionarios, puedo almacenar A1:INDICE(=0) y cuando el enemigo hace diana, uso el indice como referencia para cambiar mi tablero con una X y lo borro para seguir contando hasta 0 y ver quien gana.
 
-lista2=[]     # lista instanciada para pasarsela al jugador 2.
+lista2=[]     # lista declarada para pasarsela al jugador 2.
+listaDisparosJ2=[]
 listaLetras=["a","b","c","d","e","f","g","h","i","j"]
 numero=10
 contadorJugador1=0
-contadorJugador2=0  #15/12/2020  variable instanciada para limitar barcos jugador 2
+contadorJugador2=0  #15/12/2020  variable declarada para limitar barcos jugador 2
 contadorBarco1 = contadorBarco2 = contadorBarco3 = contadorBarco4 = 0
-contadorBarco5 = contadorBarco6 = contadorBarco7 = contadorBarco8 = 0 #segunda instanciacion de variables para referirnos a la cantidad de barcos del jugador 2
+contadorBarco5 = contadorBarco6 = contadorBarco7 = contadorBarco8 = 0 #segunda declaración de variables para referirnos a la cantidad de barcos del jugador 2
 def bienvenida():
     print("---------------------------------------------------------------------")
     # print(chr(27)+"[1;33m")
@@ -40,11 +43,15 @@ def mostrarTablero(lista):
             x+=1            #aqui incrementando la variable de fila para ir a la siguiente letra
         if lista[i] == "B":
             print("|B|",end="  ")
+        elif lista[i] == "X":
+            print("|X|",end="  ")
+        elif lista[i] == "O":
+            print("|O|",end="  ")   #he quitado las barras para que se vea mejor el AGUA, pero podemos buscar algo mas guay.
         else:
             print("|_|",end="  ")
     print("\n")
 
-def colocarBarco(lista,opcion,listaDianas):
+def colocarBarco(lista,opcion,dictDianas):
     print(opcion)
     global contadorBarco1,contadorBarco2,contadorBarco3,contadorBarco4
     global contadorBarco5,contadorBarco6,contadorBarco7,contadorBarco8 
@@ -62,7 +69,7 @@ def colocarBarco(lista,opcion,listaDianas):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:   #15/12/2020 ----- finalmente he decidido ponerlo dentro, es mas facil y ahorramos vueltas al programa de evaluar condiciones
                 contadorBarco1+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud,listaDianas)
+                llamarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 2 and contadorBarco2 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
@@ -70,7 +77,7 @@ def colocarBarco(lista,opcion,listaDianas):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco2+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud,listaDianas)
+                llamarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 3 and contadorBarco3 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
@@ -78,7 +85,7 @@ def colocarBarco(lista,opcion,listaDianas):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco3+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud,listaDianas)
+                llamarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 4 and contadorBarco4 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
@@ -86,7 +93,7 @@ def colocarBarco(lista,opcion,listaDianas):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco4+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud,listaDianas)
+                llamarBarco(lista,longitud,dictDianas)
     
     
     if opcion ==4:  #<------  15/12/2020  aqui traigo el numero de la opcion desde el menu, para saber que camino cogemos, digamos si es el colocar barco del jugador 1 o del jugador 2
@@ -101,7 +108,7 @@ def colocarBarco(lista,opcion,listaDianas):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:   #15/12/2020 ----- finalmente he decidido ponerlo dentro, es mas facil y ahorramos vueltas al programa de evaluar condiciones
                 contadorBarco5+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud,listaDianas)
+                llamarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 2 and contadorBarco6 <= 2: 
@@ -109,7 +116,7 @@ def colocarBarco(lista,opcion,listaDianas):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco6+=1       
-                llamaBarco(lista,longitud,listaDianas)
+                llamarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 3 and contadorBarco7 <= 2: 
@@ -117,7 +124,7 @@ def colocarBarco(lista,opcion,listaDianas):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco7+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud,listaDianas)
+                llamarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         if longitud == 4 and contadorBarco8 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
@@ -125,11 +132,11 @@ def colocarBarco(lista,opcion,listaDianas):
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
                 contadorBarco8+=1       #******** aqui ira una vez la llamada en caso de poder ser
-                llamaBarco(lista,longitud,listaDianas)
+                llamarBarco(lista,longitud,dictDianas)
     
     return lista            #informarse sobre si la devolucion de cuenta1 incrementa
 
-def llamaBarco(lista,longitud,listaDianas):       #comentalo enrique!
+def llamarBarco(lista,longitud,dictDianas):       #comentalo enrique!
     if longitud==1:
         disposicionBarco=None #no hace falta usar vert/horiz para los de 1
     elif longitud>1:
@@ -145,9 +152,10 @@ def llamaBarco(lista,longitud,listaDianas):       #comentalo enrique!
             print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
             coordenadaInicial=str(input())
         if longitud==1:
-            listaDianas.append(lista[lista.index(coordenadaInicial.lower())])
+            # listaDianas.append(lista[lista.index(coordenadaInicial.lower())])
+            dictDianas[coordenadaInicial.lower()]=(lista.index(coordenadaInicial.lower()))
             lista[lista.index(coordenadaInicial.lower())]="B"
-            print(listaDianas1)
+            print(dictDianas)
               #si es un barco de 1, al pasar el while que comprueba la casilla dentro del tablero y disponible pues la asigna como "B" y sale de la función.
             inicioBarco=False
 
@@ -176,9 +184,9 @@ def llamaBarco(lista,longitud,listaDianas):       #comentalo enrique!
                 #este if podria ser una funcion porque se repite 2 veces (casi)
                 if lista[sorted(listaInicioFinal)[0]+1]!="B" and lista[sorted(listaInicioFinal)[-1]-1]!="B":
                     for i in range(longitud):
-                        listaDianas.append(lista[sorted(listaInicioFinal)[0]+i])
+                        # listaDianas.append(lista[sorted(listaInicioFinal)[0]+i])
+                        dictDianas[lista[sorted(listaInicioFinal)[0]+i]]=(sorted(listaInicioFinal)[0]+i)
                         lista[sorted(listaInicioFinal)[0]+i]="B"
-                    print(listaDianas1)
                     inicioBarco=False
                 else:
                     print("Son barcos, no transformers, no los pongas encima de otros barcos. Vuelve a intentarlo")
@@ -186,9 +194,9 @@ def llamaBarco(lista,longitud,listaDianas):       #comentalo enrique!
             elif disposicionBarco.lower()=="v" and (sorted(listaInicioFinal)[-1])-sorted(listaInicioFinal)[0]==(longitud-1)*10:
                 if lista[sorted(listaInicioFinal)[0]+10]!="B" and lista[sorted(listaInicioFinal)[-1]-10]!="B":
                     for i in range(longitud):
-                        listaDianas.append(lista[sorted(listaInicioFinal)[0]+i*10])
+                        # listaDianas.append(lista[sorted(listaInicioFinal)[0]+i*10])
+                        dictDianas[lista[sorted(listaInicioFinal)[0]+i*10]]=(sorted(listaInicioFinal)[0]+i*10)
                         lista[sorted(listaInicioFinal)[0]+i*10]="B"
-                    print(listaDianas1)
                     inicioBarco=False
                 else:
                     print("Son barcos, no transformers, no los pongas encima de otros barcos. Vuelve a intentarlo")
@@ -245,21 +253,26 @@ def llamaBarco(lista,longitud,listaDianas):       #comentalo enrique!
     # print(lista)#print extra para ver la lista mientras trabajamos en el código    
 # //////////////////////////////////////////////////////
 
-def jugar(lista,lista2,dianas1,dianas2):
-    
+def jugar(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDisparosJ2):
     jugar = True
     while jugar:
         turno1=True
         print("jugador 1: introduce coordenada donde disparar: ")
         while turno1:
+            mostrarJuntos(lista,listaDisparosJ1)
             jugada1=str(input())
-            while (jugada1.lower() not in lista2) and (jugada1.lower() not in dianas2) :         #mirar franco convertir en funcion
+            while (jugada1.lower() not in lista2) and (jugada1.lower() not in dictDianas2) :         #mirar franco convertir en funcion
                 print("Apunta mejor, te has salido del tablero. Prueba otra vez: ")
                 jugada1=str(input())
-            if jugada1.lower() in dianas2:
-                dianas2.remove(jugada1.lower())
-                print("Diana! ",end="")
-                if len(dianas2) == 0:
+            if jugada1.lower() in dictDianas2:
+                listaDisparosJ1[listaDisparosJ1.index(jugada1.lower())]="X"
+                lista2[dictDianas2[jugada1.lower()]]="X"
+                dictDianas2.pop(jugada1.lower())
+                print("¡Diana! ",end="")
+                # print("tablero disparos1") QUITAR
+                # print(listaDisparosJ1) QUITAR
+                # mostrarTablero(listaDisparosJ1)  QUITAR, SOLO PRUEBAS!!
+                if len(dictDianas2) == 0:
                     print("Victoria")
                     jugar=False
                     turno2=False
@@ -267,28 +280,35 @@ def jugar(lista,lista2,dianas1,dianas2):
                     print("Dispara otra vez")
                 
             else:
+                listaDisparosJ1[listaDisparosJ1.index(jugada1.lower())]="O"
                 print("Agua, no has hecho diana. ")
                 turno1=False
+
         turno2=True
         print("jugador 2: introduce coordenada donde disparar: ")
         while turno2:
+            mostrarJuntos(lista2,listaDisparosJ2)
             jugada2=str(input())
-            while (jugada2.lower() not in lista1) and (jugada2.lower() not in dianas1) :         #mirar franco convertir en funcion
+            while (jugada2.lower() not in lista) and (jugada2.lower() not in dictDianas1) :         #mirar franco convertir en funcion
                 print("Apunta mejor, te has salido del tablero. Prueba otra vez: ")
                 jugada2=str(input())
-            if jugada2.lower() in dianas1:
-                dianas1.remove(jugada2.lower())
+            if jugada2.lower() in dictDianas1:
+                listaDisparosJ2[listaDisparosJ2.index(jugada2.lower())]="X"
+                lista[dictDianas1[jugada2.lower()]]="X"
+                dictDianas1.pop(jugada2.lower())
                 print("Diana! ",end="")
-                if len(dianas1) == 0:
+                if len(dictDianas1) == 0:
                     print("Victoria")
                     jugar=False
                 else:
                     print("Dispara otra vez")
             else:
+                listaDisparosJ2[listaDisparosJ2.index(jugada2.lower())]="O"
                 print("Agua, no has hecho diana. ")
                 turno2=False
+            mostrarTablero(listaDisparosJ2)
 
-def mostrarJuntos(listaA,listaB):
+def mostrarJuntos(listaA,listaB): #no se puede usar la funcion mostrar tablero aqui dentro??? NI idea, es una pregunta.
     auxiliar=0
     listaFila = ["A","B","C","D","E","F","G","H","I","J"]   #esta lista se utilizara para imprimir a principio de linea las letras para el tablero
     x=0     #este auxiliar lo coloco aqui para poder referirme a la posicion de la lista que quiero que se imprima, asi puedo ir imprimiendo las filas
@@ -308,6 +328,10 @@ def mostrarJuntos(listaA,listaB):
                 for j in range(10):
                     if listaB[j+auxiliar] == "B":
                         print("|B|",end="  ")
+                    elif listaB[j+auxiliar] == "X":
+                        print("|X|",end="  ")
+                    elif listaB[j+auxiliar] == "O":
+                        print("|O|",end="  ")
                     else:
                         print("|_|",end="  ")
                 print("\n")
@@ -318,6 +342,10 @@ def mostrarJuntos(listaA,listaB):
         if i < 100:
             if listaA[i] == "B":
                 print("|B|",end="  ")
+            elif listaA[i] == "X":
+                print("|X|",end="  ")
+            elif listaA[i] == "O":
+                print("|O|",end="  ")
             else:
                 print("|_|",end="  ")
     
@@ -337,7 +365,7 @@ def mostrarMenu(lista,lista2):
             if contadorJugador1 == 8:#15/12/2020  limita la cantidad de barcos a colocar, si pasa de 8 no te deja entrar.
                 print("ya has colocado todos los barcos.")
             else:
-                colocarBarco(lista,opcion,listaDianas1)
+                colocarBarco(lista,opcion,dictDianas1)
                 contadorJugador1+=1
         if opcion == 3:         #15/12/2020   he creado dos opciones mas para crear segundo tablero. gracias a pasarle tablero a lista2 sabe a cual me estoy refiriendo.
 
@@ -346,12 +374,12 @@ def mostrarMenu(lista,lista2):
             if contadorJugador2 == 8:
                 print("ya has colocado todos los barcos")
             else:
-                colocarBarco(lista2,opcion,listaDianas2)#15/12/2020 colocar barco en lista2 va a haber que mirarlo con cuidado, ya que utiliza los mismo contadores que jugador uno, por ahora... hay dos opciones: mirar como pasarle y reiniciar los contadores y que los tenga en cuenta por dentro cada vez(parece mas complicado, pero mas elegante), o repetir el codigo completo con otro nombre para colocar barcos(parece lo mas facil,pero menos elegante) ---- por ahora he hecho la segunda opción, asi mientras lo vamos terminando. nos acabamos refiriendo a los segundos contadores gracias tanto a la lista que se le pasa como a la opcion escogida en el menu( que tambien se le pasa).
+                colocarBarco(lista2,opcion,dictDianas2)#15/12/2020 colocar barco en lista2 va a haber que mirarlo con cuidado, ya que utiliza los mismo contadores que jugador uno, por ahora... hay dos opciones: mirar como pasarle y reiniciar los contadores y que los tenga en cuenta por dentro cada vez(parece mas complicado, pero mas elegante), o repetir el codigo completo con otro nombre para colocar barcos(parece lo mas facil,pero menos elegante) ---- por ahora he hecho la segunda opción, asi mientras lo vamos terminando. nos acabamos refiriendo a los segundos contadores gracias tanto a la lista que se le pasa como a la opcion escogida en el menu( que tambien se le pasa).
                 contadorJugador2+=1
         if opcion==5 :
-            jugar(lista,lista2,listaDianas1,listaDianas2)
+            jugar(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDisparosJ2)
             # if contadorJugador1==8 and contadorJugador2==8:
-                # jugar(listaDianas1,listaDianas2)
+                # jugar(dictDianas1,dictDianas2)
             # else:
             #     print("Todavia no habeis(puto enrique y el idioma) colocado todos los barcos")
             menuOn = False
@@ -363,4 +391,8 @@ def mostrarMenu(lista,lista2):
 bienvenida()
 hacerTablero(lista,listaLetras)
 hacerTablero(lista2,listaLetras)
-mostrarMenu(lista,lista2) 
+
+hacerTablero(listaDisparosJ1,listaLetras)
+hacerTablero(listaDisparosJ2,listaLetras)#hacer funcion o enchufar esta asignacion dentro de otra funcion como hacer tablero o jugar(se empieza a utilizar cuando se empieza a disparar y se usara tambien en mostrarJuntos mientras se juega). Quiero dos tableros vacios(con las 100 posiciones dentro) para almacenar los aciertos y fallos de cada jugador y mostrarselos mientras juega.
+
+mostrarMenu(lista,lista2)
