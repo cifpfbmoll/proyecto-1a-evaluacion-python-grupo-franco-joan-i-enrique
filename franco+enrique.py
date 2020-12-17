@@ -14,9 +14,10 @@ contadorBarco1 = contadorBarco2 = contadorBarco3 = contadorBarco4 = 0
 contadorBarco5 = contadorBarco6 = contadorBarco7 = contadorBarco8 = 0 #segunda instanciacion de variables para referirnos a la cantidad de barcos del jugador 2
 def bienvenida():
     print("---------------------------------------------------------------------")
-    print("+++++++++++++++++ Bienvenido a Battleship en Python +++++++++++++++++++")
+    # print(chr(27)+"[1;33m")
+    print("+++++++++++++++++ Bienvenido a Battleship en Python +++++++++++++++++")
     print("---------------------------------------------------------------------")
-    print("+++++++++++++++todos los tableros de battleship son de 10x10 Francisco, por eso se llama battleship, porque ya tiene unas reglas predefinidas que lo identifican como battleship y no como la ruka (: +++++++++++++++++")#<3
+    print("++++++++++++++++++++++++++tablero de 10x10 ++++++++++++++++++++++++++")#<3
     print("\n")
 
 def hacerTablero(lista,listaLetras):
@@ -287,7 +288,39 @@ def jugar(lista,lista2,dianas1,dianas2):
                 print("Agua, no has hecho diana. ")
                 turno2=False
 
-
+def mostrarJuntos(listaA,listaB):
+    auxiliar=0
+    listaFila = ["A","B","C","D","E","F","G","H","I","J"]   #esta lista se utilizara para imprimir a principio de linea las letras para el tablero
+    x=0     #este auxiliar lo coloco aqui para poder referirme a la posicion de la lista que quiero que se imprima, asi puedo ir imprimiendo las filas
+    for i in range(10):
+        print("  ",i+1,end=" ")
+    print(" ",end="")
+    for i in range(10):
+        print("  ",i+1,end=" ")
+    print("\n")
+    
+    for i in range(101):
+        # if i%numero == 0:
+        #     print("\n")
+        if i == 0 or i%10 == 0:
+            print (listaFila[x],end=" ")    
+            if i>0 and i%10 == 0: 
+                for j in range(10):
+                    if listaB[j+auxiliar] == "B":
+                        print("|B|",end="  ")
+                    else:
+                        print("|_|",end="  ")
+                print("\n")
+                x+=1            #aqui incrementando la variable de fila para ir a la siguiente letra
+                auxiliar+=10
+                if x<10:
+                    print(listaFila[x],end=" ")
+        if i < 100:
+            if listaA[i] == "B":
+                print("|B|",end="  ")
+            else:
+                print("|_|",end="  ")
+    
 
 
 def mostrarMenu(lista,lista2):
@@ -324,6 +357,8 @@ def mostrarMenu(lista,lista2):
             menuOn = False
         if opcion == 6:
             menuOn = False
+        if opcion== 7:
+            mostrarJuntos(lista,lista2)
 
 bienvenida()
 hacerTablero(lista,listaLetras)
