@@ -19,7 +19,7 @@ def mostrarBienvenida():
 
     print("+++++++++++++++++ Bienvenido a Battleship en Python +++++++++++++++++")
     print("---------------------------------------------------------------------")
-    print("++++++++++++++++++++++++++UwU++++++++++++++++++++++++++")#<3
+    print("+++++++++++++++++++++++++ Para 2 jugadores ++++++++++++++++++++++++++")#<3
     print("\n")
 
 def hacerTablero(lista,listaLetras):
@@ -298,14 +298,14 @@ def mostrarMenu(lista,lista2):
     global contadorjugador2
     menuOn = True
     while menuOn:
-        print("¿Qué quieres hacer?")
+        # print("¿Qué quieres hacer?")
         print("1: Ver tablero primer jugador \n2: Colocar barco primer jugador \n3: Ver tablero segundo jugador \n4: Colocar barco segundo jugador \n5: Jugar  \n6: Salir" )
         opcion=int(input())
         if opcion == 1:
             mostrarTablero(lista)
         if opcion == 2:
             if contadorjugador1 == 8:#15/12/2020  limita la cantidad de barcos a colocar, si pasa de 8 no te deja entrar.
-                print("ya has colocado todos los barcos.")
+                print("Ya has colocado todos los barcos.")
             else:
                 evaluarBarcos(lista,opcion,dictDianas1)
                 contadorjugador1+=1
@@ -314,7 +314,7 @@ def mostrarMenu(lista,lista2):
             mostrarTablero(lista2)
         if opcion == 4:
             if contadorjugador2 == 8:
-                print("ya has colocado todos los barcos")
+                print("Ya has colocado todos los barcos")
             else:
                 evaluarBarcos(lista2,opcion,dictDianas2)#15/12/2020 colocar barco en lista2 va a haber que mirarlo con cuidado, ya que utiliza los mismo contadores que jugador uno, por ahora... hay dos opciones: mirar como pasarle y reiniciar los contadores y que los tenga en cuenta por dentro cada vez(parece mas complicado, pero mas elegante), o repetir el codigo completo con otro nombre para colocar barcos(parece lo mas facil,pero menos elegante) ---- por ahora he hecho la segunda opción, asi mientras lo vamos terminando. nos acabamos refiriendo a los segundos contadores gracias tanto a la lista que se le pasa como a la opcion escogida en el menu( que tambien se le pasa).
                 contadorjugador2+=1
