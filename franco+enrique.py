@@ -232,7 +232,7 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
             else:
                 listaDisparosJ1[listaDisparosJ1.index(jugada1.lower())]="O"
                 print("Agua, no has hecho diana. ")
-                input()
+                input("Press any key to continue.")
                 turno1=False
 
         turno2=True
@@ -257,6 +257,7 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
             else:
                 listaDisparosJ2[listaDisparosJ2.index(jugada2.lower())]="O"
                 print("Agua, no has hecho diana. ")
+                input("Press any key to continue.")
                 turno2=False
 
 def mostrarJuntos(listaA,listaB): #no se puede usar la funcion mostrar tablero aqui dentro??? NI idea, es una pregunta.
