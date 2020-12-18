@@ -11,16 +11,23 @@ dictDianas2={} #o contador al num de dianas para ganar o listaDianas.pop/remove>
 numero=10
 contadorjugador1=0
 contadorjugador2=0  #15/12/2020  variable declarada para limitar barcos jugador2
-contadorBarco1 = contadorBarco2 = contadorBarco3 = contadorBarco4 = 0
-contadorBarco5 = contadorBarco6 = contadorBarco7 = contadorBarco8 = 0 #segunda declaración de variables para referirnos a la cantidad de barcos del jugador 2
+contadorBarco1,contadorBarco2,contadorBarco3,contadorBarco4 = 0,0,0,0
+contadorBarco5,contadorBarco6,contadorBarco7,contadorBarco8 = 0,0,0,0 #segunda declaración de variables para referirnos a la cantidad de barcos del jugador 2
 def mostrarBienvenida():
     print("---------------------------------------------------------------------")
     # print(chr(27)+"[1;33m")  AQUI FALTA INDICAR EL FINAL DEL CHR ETC PARA QUE NO MODIFIQUE DE COLOR TODO LO QUE PRINTEA LA TERMINAL, COMO SI FUERA UN TAG DE HTML
 
     print("+++++++++++++++++ Bienvenido a Battleship en Python +++++++++++++++++")
     print("---------------------------------------------------------------------")
-    print("+++++++++++++++++++++++++ Para 2 jugadores ++++++++++++++++++++++++++")#<3
+    print("+++++++++++++++++++++++ Para 2 jugadores <3 ++++++++++++++++++++++++")#<3
     print("\n")
+
+
+def validarCoordenada(coordenada):
+    while coordenada.lower() not in lista:
+        print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
+        coordenada=str(input())
+    return coordenada.lower()
 
 def hacerTablero(lista,listaLetras):
     for i in listaLetras:
@@ -32,7 +39,7 @@ def mostrarTablero(lista):
     listaFila = ["A","B","C","D","E","F","G","H","I","J"]   #esta lista se utilizara para imprimir a principio de linea las letras para el tablero
     x=0     #este auxiliar lo coloco aqui para poder referirme a la posicion de la lista que quiero que se imprima, asi puedo ir imprimiendo las filas
     for i in range(10):
-            print("  ",i+1,end=" ")
+        print("  ",i+1,end=" ")
     for i in range(len(lista)):
         if i%numero == 0:
             print("\n")
@@ -52,7 +59,7 @@ def mostrarTablero(lista):
 def evaluarBarcos(lista,opcion,dictDianas):
     print(opcion)
     global contadorBarco1,contadorBarco2,contadorBarco3,contadorBarco4
-    global contadorBarco5,contadorBarco6,contadorBarco7,contadorBarco8 
+    global contadorBarco5,contadorBarco6,contadorBarco7,contadorBarco8
     ### 15/12/2020 !enrique!, es necesario colocar mas variables para el control de contadorbarco para el jugador 2, ya que pasandole la lista ya sabe a cual se esta refiriendo, pero nos queda el problema de limitar los barcos del segundo jugador si necesitas aclaracion sobre esta parte dime cosas.
     if opcion ==2:  #<------  15/12/2020  aqui traigo el numero de la opcion desde el menu, para saber que camino cogemos, digamos si es el colocar barco del jugador 1 o del jugador 2
         print("Elige la longitud del barco que quieres colocar (1, 2, 3 o 4): ")
@@ -145,10 +152,11 @@ def colocarBarco(lista,longitud,dictDianas):       #comentalo enrique!
 
     while inicioBarco:
         print("Introduce la coordenada inicial del barco")
-        coordenadaInicial=str(input())
-        while coordenadaInicial.lower() not in lista:         #mirar franco convertir en funcion
-            print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-            coordenadaInicial=str(input())
+        coordenadaInicial=str(input()) 
+        coordenadaInicial=validarCoordenada(coordenadaInicial)
+        # while coordenadaInicial.lower() not in lista:         #mirar franco convertir en funcion
+        #     print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
+        #     coordenadaInicial=str(input())
         if longitud==1:
             dictDianas[coordenadaInicial.lower()]=(lista.index(coordenadaInicial.lower()))
             lista[lista.index(coordenadaInicial.lower())]="B"
@@ -162,9 +170,10 @@ def colocarBarco(lista,longitud,dictDianas):       #comentalo enrique!
             # listaInicioFinal.append(lista.index(coordenadaInicial.lower()))
             print("Introduce la coordenada final del barco")
             coordenadaFinal=str(input())
-            while coordenadaFinal.lower() not in lista:
-                print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-                coordenadaFinal=str(input())
+            coordenadaFinal=validarCoordenada(coordenadaFinal)
+            # while coordenadaFinal.lower() not in lista:
+            #     print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
+            #     coordenadaFinal=str(input())
             # a partir de aqui vamos a comprobar que las posiciones esten a la misma distancia que la longitud
             listaInicioFinal=[]   #//descomentar y quitar lineas 151 y 152
             listaInicioFinal.append(lista.index(coordenadaInicial.lower()))
@@ -200,11 +209,12 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
     jugar = True
     while jugar:
         turno1=True
+        os.system('cls')
         mostrarJuntos(lista,listaDisparosJ1)
         print("Jugador 1: Introduce coordenada donde disparar: ")
         while turno1:
             jugada1=str(input(">"))
-            while (jugada1.lower() not in lista2) and (jugada1.lower() not in dictDianas2) :         #mirar franco convertir en funcion
+            while (jugada1.lower() not in lista2) and (jugada1.lower() not in dictDianas2) :
                 print("Apunta mejor, te has salido del tablero. Prueba otra vez: ")
                 jugada1=str(input())
             if jugada1.lower() in dictDianas2:
@@ -222,14 +232,16 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
             else:
                 listaDisparosJ1[listaDisparosJ1.index(jugada1.lower())]="O"
                 print("Agua, no has hecho diana. ")
+                input()
                 turno1=False
 
         turno2=True
+        os.system('cls')
         mostrarJuntos(lista2,listaDisparosJ2)
         print("Jugador 2: Introduce coordenada donde disparar: ")
         while turno2:
             jugada2=str(input(">"))
-            while (jugada2.lower() not in lista) and (jugada2.lower() not in dictDianas1) :         #mirar franco convertir en funcion
+            while (jugada2.lower() not in lista) and (jugada2.lower() not in dictDianas1) :
                 print("Apunta mejor, te has salido del tablero. Prueba otra vez: ")
                 jugada2=str(input())
             if jugada2.lower() in dictDianas1:
