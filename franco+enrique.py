@@ -67,13 +67,13 @@ def evaluarBarcos(lista,opcion,dictDianas):
         while 0> longitud > 4 :
             print("Whoops, respuesta incorrecta. Inténtalo otra vez: ")
             longitud=int(input())
-        #Comentario antiguo 11/12/2020 enrique, me da la impresion que tendremo que hacer otra funcion en este punto, ya que si lo dejamos asi, tendremos que copiar la funcion todo el rato dentro de la evaluacion de la longitud y cantidad de barcos.   ********
         
+        # aqui se ha decidido dejar este trozo de funcion repetida y no en funcion, dado que asi podemos incrementar o decrementar la cantidad de barcos que queramos colocar de cada tipo
         if longitud == 1 and contadorBarco1 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
             if contadorBarco1 == 2:
                 print("Ya has colocado todo los barcos de esta medida.")
-            else:   #15/12/2020 ----- finalmente he decidido ponerlo dentro, es mas facil y ahorramos vueltas al programa de evaluar condiciones
-                contadorBarco1+=1       #******** aqui ira una vez la llamada en caso de poder ser
+            else:   # finalmente decidimos ponerlo dentro, es mas facil y ahorramos vueltas al programa de evaluar condiciones
+                contadorBarco1+=1       # aqui ira una vez la llamada en caso de poder ser
                 colocarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -101,18 +101,18 @@ def evaluarBarcos(lista,opcion,dictDianas):
                 colocarBarco(lista,longitud,dictDianas)
     
     
-    if opcion ==4:  #<------  15/12/2020  aqui traigo el numero de la opcion desde el menu, para saber que camino cogemos, digamos si es el colocar barco del jugador 1 o del jugador 2
+    if opcion ==4:  # aqui traemos el numero de la opcion desde el menu, para saber que camino cogemos, digamos si es el colocar barco del jugador 1 o del jugador 2
         print("Elige la longitud del barco que quieres colocar (1, 2, 3 o 4): ")
         longitud=int(input())
         while 0> longitud > 4 :
             print("Whoops, respuesta incorrecta. Inténtalo otra vez: ")
             longitud=int(input())
         
-        if longitud == 1 and contadorBarco5 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+        if longitud == 1 and contadorBarco5 <= 2: 
             if contadorBarco5 == 2:
                 print("Ya has colocado todo los barcos de esta medida.")
-            else:   #15/12/2020 ----- finalmente he decidido ponerlo dentro, es mas facil y ahorramos vueltas al programa de evaluar condiciones
-                contadorBarco5+=1       #******** aqui ira una vez la llamada en caso de poder ser
+            else:  
+                contadorBarco5+=1       
                 colocarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -128,18 +128,18 @@ def evaluarBarcos(lista,opcion,dictDianas):
             if contadorBarco7 == 2:
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
-                contadorBarco7+=1       #******** aqui ira una vez la llamada en caso de poder ser
+                contadorBarco7+=1       
                 colocarBarco(lista,longitud,dictDianas)
         
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        if longitud == 4 and contadorBarco8 <= 2: #aqui se evalua la cantidad de barcos colocados, permitimos 2 barcos de 1
+        if longitud == 4 and contadorBarco8 <= 2: 
             if contadorBarco8 == 2:
                 print("Ya has colocado todo los barcos de esta medida.")
             else:
-                contadorBarco8+=1       #******** aqui ira una vez la llamada en caso de poder ser
+                contadorBarco8+=1       
                 colocarBarco(lista,longitud,dictDianas)
     
-    return lista            #informarse sobre si la devolucion de cuenta1 incrementa
+    return lista            
 
 def colocarBarco(lista,longitud,dictDianas):       #comentalo enrique!
     if longitud==1:
@@ -335,6 +335,8 @@ def mostrarMenu(lista,lista2):
                 contadorjugador2+=1
         if opcion==5 :
             comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDisparosJ2)
+
+            #+++++++ si se descomentan estas filas, se obliga a jugar con 8 barcos cada jugador y el juego no comienzahasta que esten colocados todos los barcos.
             # if contadorjugador1==8 and contadorjugador2==8:
                 # comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDisparosJ2)
             # else:
