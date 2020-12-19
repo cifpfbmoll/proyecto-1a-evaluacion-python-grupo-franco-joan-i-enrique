@@ -1,6 +1,6 @@
 import os
 os.system('cls')
-#commit
+
 lista=[]
 lista2=[]     # lista declarada para pasarsela al jugador 2.
 listaDisparosJ1=[]
@@ -212,7 +212,7 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
         turno2=True
         while turno1:
             os.system('cls')
-            print("Jugador 1: Introduce coordenada donde disparar: ")
+            print("Jugador 1. Introduce coordenada donde disparar: ")
             mostrarJuntos(lista,listaDisparosJ1)
             jugada1=str(input(">"))
             while (jugada1.lower() not in lista2) and (jugada1.lower() not in dictDianas2) :
@@ -229,16 +229,16 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
                     turno1=False
                     turno2=False
                 else:
-                    print("Dispara otra vez")
+                    input("Press any key para disparar otra vez.")
                 
             else:
                 listaDisparosJ1[listaDisparosJ1.index(jugada1.lower())]="O"
                 print("Agua, no has hecho diana. ")
                 input("Press any key to continue.")
-                turno1=False            
+                turno1=False       
         while turno2:
             os.system('cls')
-            print("Jugador 2: Introduce coordenada donde disparar: ")
+            print("Jugador 2. Introduce coordenada donde disparar: ")
             mostrarJuntos(lista2,listaDisparosJ2)
             jugada2=str(input(">"))
             while (jugada2.lower() not in lista) and (jugada2.lower() not in dictDianas1) :
@@ -255,7 +255,7 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
                     turno1=False
                     turno2=False
                 else:
-                    print("Dispara otra vez")
+                    input("Press any key para disparar otra vez.")
             else:
                 listaDisparosJ2[listaDisparosJ2.index(jugada2.lower())]="O"
                 print("Agua, no has hecho diana. ")
@@ -336,9 +336,9 @@ def mostrarMenu(lista,lista2):
         if opcion==5 :
             comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDisparosJ2)
             # if contadorjugador1==8 and contadorjugador2==8:
-                # comenzarPartida(dictDianas1,dictDianas2)
+                # comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDisparosJ2)
             # else:
-            #     print("Todavia no habeis(puto enrique y el idioma) colocado todos los barcos")
+            #     print("Todavía no habéis colocado todos los barcos.")
             menuOn = False
         if opcion == 6:
             menuOn = False
