@@ -209,10 +209,11 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
     jugar = True
     while jugar:
         turno1=True
-        os.system('cls')
-        mostrarJuntos(lista,listaDisparosJ1)
-        print("Jugador 1: Introduce coordenada donde disparar: ")
+        turno2=True
         while turno1:
+            os.system('cls')
+            print("Jugador 1: Introduce coordenada donde disparar: ")
+            mostrarJuntos(lista,listaDisparosJ1)
             jugada1=str(input(">"))
             while (jugada1.lower() not in lista2) and (jugada1.lower() not in dictDianas2) :
                 print("Apunta mejor, te has salido del tablero. Prueba otra vez: ")
@@ -225,6 +226,7 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
                 if len(dictDianas2) == 0:
                     print("Victoria")
                     jugar=False
+                    turno1=False
                     turno2=False
                 else:
                     print("Dispara otra vez")
@@ -233,13 +235,11 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
                 listaDisparosJ1[listaDisparosJ1.index(jugada1.lower())]="O"
                 print("Agua, no has hecho diana. ")
                 input("Press any key to continue.")
-                turno1=False
-
-        turno2=True
-        os.system('cls')
-        mostrarJuntos(lista2,listaDisparosJ2)
-        print("Jugador 2: Introduce coordenada donde disparar: ")
+                turno1=False            
         while turno2:
+            os.system('cls')
+            print("Jugador 2: Introduce coordenada donde disparar: ")
+            mostrarJuntos(lista2,listaDisparosJ2)
             jugada2=str(input(">"))
             while (jugada2.lower() not in lista) and (jugada2.lower() not in dictDianas1) :
                 print("Apunta mejor, te has salido del tablero. Prueba otra vez: ")
@@ -252,6 +252,8 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
                 if len(dictDianas1) == 0:
                     print("Victoria")
                     jugar=False
+                    turno1=False
+                    turno2=False
                 else:
                     print("Dispara otra vez")
             else:
@@ -260,7 +262,7 @@ def comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDi
                 input("Press any key to continue.")
                 turno2=False
 
-def mostrarJuntos(listaA,listaB): #no se puede usar la funcion mostrar tablero aqui dentro??? NI idea, es una pregunta.
+def mostrarJuntos(listaA,listaB):
     auxiliar=0
     listaFila = ["A","B","C","D","E","F","G","H","I","J"]   #esta lista se utilizara para imprimir a principio de linea las letras para el tablero
     x=0     #este auxiliar lo coloco aqui para poder referirme a la posicion de la lista que quiero que se imprima, asi puedo ir imprimiendo las filas
@@ -346,8 +348,7 @@ def mostrarMenu(lista,lista2):
 mostrarBienvenida()
 hacerTablero(lista,listaLetras)
 hacerTablero(lista2,listaLetras)
-
 hacerTablero(listaDisparosJ1,listaLetras)
-hacerTablero(listaDisparosJ2,listaLetras)#hacer funcion o enchufar esta asignacion dentro de otra funcion como hacer tablero o jugarr(se empieza a utilizar cuando se empieza a disparar y se usara tambien en mostrarJuntos mientras se juega). Quiero dos tableros vacios(con las 100 posiciones dentro) para almacenar los aciertos y fallos de cada jugador y mostrarselos mientras juega.
+hacerTablero(listaDisparosJ2,listaLetras)#hacer funcion o enchufar esta asignacion dentro de otra funcion como hacer tablero o jugar(se empieza a utilizar cuando se empieza a disparar y se usara tambien en mostrarJuntos mientras se juega). Quiero dos tableros vacios(con las 100 posiciones dentro) para almacenar los aciertos y fallos de cada jugador y mostrarselos mientras juega.
 
 mostrarMenu(lista,lista2)
