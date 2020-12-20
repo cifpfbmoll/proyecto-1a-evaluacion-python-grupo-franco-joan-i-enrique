@@ -2,12 +2,12 @@ import os
 os.system('cls')
 
 lista=[]
-lista2=[]     # lista declarada para pasarsela al jugador 2.
+lista2=[]
 listaDisparosJ1=[]
 listaDisparosJ2=[]
 listaLetras=["a","b","c","d","e","f","g","h","i","j"]
 dictDianas1={}
-dictDianas2={} #o contador al num de dianas para ganar o listaDianas.pop/remove>len.lista==0
+dictDianas2={}
 numero=10
 contadorjugador1=0
 contadorjugador2=0  #15/12/2020  variable declarada para limitar barcos jugador2
@@ -15,8 +15,6 @@ contadorBarco1,contadorBarco2,contadorBarco3,contadorBarco4 = 0,0,0,0
 contadorBarco5,contadorBarco6,contadorBarco7,contadorBarco8 = 0,0,0,0 #segunda declaración de variables para referirnos a la cantidad de barcos del jugador 2
 def mostrarBienvenida():
     print("---------------------------------------------------------------------")
-    # print(chr(27)+"[1;33m")  AQUI FALTA INDICAR EL FINAL DEL CHR ETC PARA QUE NO MODIFIQUE DE COLOR TODO LO QUE PRINTEA LA TERMINAL, COMO SI FUERA UN TAG DE HTML
-
     print("+++++++++++++++++ Bienvenido a Battleship en Python +++++++++++++++++")
     print("---------------------------------------------------------------------")
     print("+++++++++++++++++++++++ Para 2 jugadores <3 ++++++++++++++++++++++++")#<3
@@ -60,7 +58,6 @@ def evaluarBarcos(lista,opcion,dictDianas):
     print(opcion)
     global contadorBarco1,contadorBarco2,contadorBarco3,contadorBarco4
     global contadorBarco5,contadorBarco6,contadorBarco7,contadorBarco8
-    ### 15/12/2020 !enrique!, es necesario colocar mas variables para el control de contadorbarco para el jugador 2, ya que pasandole la lista ya sabe a cual se esta refiriendo, pero nos queda el problema de limitar los barcos del segundo jugador si necesitas aclaracion sobre esta parte dime cosas.
     if opcion ==2:  #<------  15/12/2020  aqui traigo el numero de la opcion desde el menu, para saber que camino cogemos, digamos si es el colocar barco del jugador 1 o del jugador 2
         print("Elige la longitud del barco que quieres colocar (1, 2, 3 o 4): ")
         longitud=int(input())
@@ -141,41 +138,29 @@ def evaluarBarcos(lista,opcion,dictDianas):
     
     return lista            
 
-def colocarBarco(lista,longitud,dictDianas):       #comentalo enrique!
+def colocarBarco(lista,longitud,dictDianas):
     if longitud==1:
         disposicionBarco=None #no hace falta usar vert/horiz para los de 1
     elif longitud>1:
-        disposicionBarco=input("¿Colocar barco en horizontal o vertical? (ej: H o V): ") #Pendiente de terminar. Se puede meter while para que respuesta sea h o v obligatoriamente.
+        disposicionBarco=input("¿Colocar barco en horizontal o vertical? (ej: H o V): ")
 
     inicioBarco=True
-    #meto coord.inic y final en el while, solo sales del bucle si has puesto de 1 ficha correctamente o si has puesto correctamente la inic y final de long 2-4. >>>>
-
     while inicioBarco:
         print("Introduce la coordenada inicial del barco")
         coordenadaInicial=str(input()) 
         coordenadaInicial=validarCoordenada(coordenadaInicial)
-        # while coordenadaInicial.lower() not in lista:         #mirar franco convertir en funcion
-        #     print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-        #     coordenadaInicial=str(input())
         if longitud==1:
             dictDianas[coordenadaInicial.lower()]=(lista.index(coordenadaInicial.lower()))
             lista[lista.index(coordenadaInicial.lower())]="B"
               #si es un barco de 1, al pasar el while que comprueba la casilla dentro del tablero y disponible pues la asigna como "B" y sale de la función.
             inicioBarco=False
-
-# OK, Agárrate Franco, hago lo mismo que en el viejo método:
-# Almaceno los indices de coordenada inic y fin en >listaInicioFinal<, las ordeno con sorted(). (posición 0 es el indice mas pequeño y posicion 1 es el grande). Y lo uso para hacer comprobaciones de la distancia que hay entre ambas puntas del barco.
         elif longitud>1:
-            # listaInicioFinal=[] #solo para comprobar cosas, 159 y 160 hacen esto
-            # listaInicioFinal.append(lista.index(coordenadaInicial.lower()))
+
             print("Introduce la coordenada final del barco")
             coordenadaFinal=str(input())
             coordenadaFinal=validarCoordenada(coordenadaFinal)
-            # while coordenadaFinal.lower() not in lista:
-            #     print("Esa casilla está ocupada o no existe(smh), prueba otra vez: ")
-            #     coordenadaFinal=str(input())
             # a partir de aqui vamos a comprobar que las posiciones esten a la misma distancia que la longitud
-            listaInicioFinal=[]   #//descomentar y quitar lineas 151 y 152
+            listaInicioFinal=[]
             listaInicioFinal.append(lista.index(coordenadaInicial.lower()))
             listaInicioFinal.append(lista.index(coordenadaFinal.lower()))
 
@@ -183,7 +168,6 @@ def colocarBarco(lista,longitud,dictDianas):       #comentalo enrique!
             #aqui tenemos un if para barcos en v y otro para horiz.
             # pero ambos comprueban que el barco sea correcto(la primera y la ultima estén a la distancia adecuada, si es un barco imposible te lleva al else que reinicia TODO el bucle y metes coord.inicio y final de nuevo)
             if disposicionBarco.lower()=="h" and (sorted(listaInicioFinal)[0])+(longitud-1)==sorted(listaInicioFinal)[-1]:
-                #este if podria ser una funcion porque se repite 2 veces (casi)
                 if lista[sorted(listaInicioFinal)[0]+1]!="B" and lista[sorted(listaInicioFinal)[-1]-1]!="B":
                     for i in range(longitud):
                         dictDianas[lista[sorted(listaInicioFinal)[0]+i]]=(sorted(listaInicioFinal)[0]+i)
@@ -331,7 +315,7 @@ def mostrarMenu(lista,lista2):
             if contadorjugador2 == 8:
                 print("Ya has colocado todos los barcos")
             else:
-                evaluarBarcos(lista2,opcion,dictDianas2)#15/12/2020 colocar barco en lista2 va a haber que mirarlo con cuidado, ya que utiliza los mismo contadores que jugador uno, por ahora... hay dos opciones: mirar como pasarle y reiniciar los contadores y que los tenga en cuenta por dentro cada vez(parece mas complicado, pero mas elegante), o repetir el codigo completo con otro nombre para colocar barcos(parece lo mas facil,pero menos elegante) ---- por ahora he hecho la segunda opción, asi mientras lo vamos terminando. nos acabamos refiriendo a los segundos contadores gracias tanto a la lista que se le pasa como a la opcion escogida en el menu( que tambien se le pasa).
+                evaluarBarcos(lista2,opcion,dictDianas2)
                 contadorjugador2+=1
         if opcion==5 :
             comenzarPartida(lista,lista2,dictDianas1,dictDianas2,listaDisparosJ1,listaDisparosJ2)
@@ -351,6 +335,5 @@ mostrarBienvenida()
 hacerTablero(lista,listaLetras)
 hacerTablero(lista2,listaLetras)
 hacerTablero(listaDisparosJ1,listaLetras)
-hacerTablero(listaDisparosJ2,listaLetras)#hacer funcion o enchufar esta asignacion dentro de otra funcion como hacer tablero o jugar(se empieza a utilizar cuando se empieza a disparar y se usara tambien en mostrarJuntos mientras se juega). Quiero dos tableros vacios(con las 100 posiciones dentro) para almacenar los aciertos y fallos de cada jugador y mostrarselos mientras juega.
-
+hacerTablero(listaDisparosJ2,listaLetras)
 mostrarMenu(lista,lista2)
